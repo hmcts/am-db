@@ -1,0 +1,32 @@
+version: '3.0'
+
+services:
+  am-db:
+    image: hmcts/am-db
+    container_name: am-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - am-lib-testing-service-network
+    environment:
+      POSTGRES_PASSWORD: 'ampass'
+      POSTGRES_USER: 'amuser'
+      POSTGRES_DB: 'am'
+    ports:
+      - 5500:5432
+
+  flyway:
+    image: boxfuse/flyway
+    restart: on-failure
+    command: -url=jdbc:postgresql://am-db:5432/am -user='amuser' -password='ampass' -schemas='public' migrate
+    volumes:
+      - ./resources/db/migration/:/flyway/sql
+    depends_on:
+     - am-db
+    networks:
+      - am-lib-testing-service-network
+
+networks:
+  am-lib-testing-service-network:
+    driver: bridge
