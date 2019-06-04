@@ -9,23 +9,10 @@ services:
       dockerfile: Dockerfile
     networks:
       - am-lib-testing-service-network
-    environment:
-      POSTGRES_PASSWORD: 'ampass'
-      POSTGRES_USER: 'amuser'
-      POSTGRES_DB: 'am'
     ports:
       - 5500:5432
-
-  flyway:
-    image: boxfuse/flyway
-    restart: on-failure
-    command: -url=jdbc:postgresql://am-db:5432/am -user='amuser' -password='ampass' -schemas='public' migrate
-    volumes:
-      - ./resources/db/migration/:/flyway/sql
-    depends_on:
-     - am-db
-    networks:
-      - am-lib-testing-service-network
+    env_file:
+      - .env
 
 networks:
   am-lib-testing-service-network:
