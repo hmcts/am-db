@@ -1,0 +1,26 @@
+#!groovy
+properties(
+    [
+        [
+            $class       : 'GithubProjectProperty',
+            projectUrlStr: 'https://github.com/hmcts/am-db'
+        ],
+        pipelineTriggers([[$class: 'GitHubPushTrigger']])
+    ]
+)
+
+@Library("Infrastructure")
+
+def type = "database"
+def product = "am"
+def component = "db"
+
+withPipeline(type, product, component) {
+    onMaster {
+        enableSlackNotifications('#am-master-builds')
+    }
+        env.AM_DB = "am"
+        env.AM_DB_USERNAME = "amuser"
+    }
+    enableDockerBuild()
+}
