@@ -1,12 +1,12 @@
 #!groovy
 properties(
+    [
         [
-                [
-                        $class       : 'GithubProjectProperty',
-                        projectUrlStr: 'https://github.com/hmcts/am-db'
-                ],
-                pipelineTriggers([[$class: 'GitHubPushTrigger']])
-        ]
+            $class       : 'GithubProjectProperty',
+            projectUrlStr: 'https://github.com/hmcts/am-db'
+        ],
+        pipelineTriggers([[$class: 'GitHubPushTrigger']])
+    ]
 )
 
 @Library("Infrastructure")
