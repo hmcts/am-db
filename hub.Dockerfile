@@ -8,7 +8,6 @@ RUN chown -R gradle:gradle /home/gradle/src
 USER gradle
 
 WORKDIR /home/gradle/src
-RUN gradle assemble
 
 COPY ./docker/am-db/docker-entrypoint-initdb.d/* /docker-entrypoint-initdb.d/
 
