@@ -11,7 +11,7 @@ properties(
 
 @Library("Infrastructure")
 
-def type = "database"
+def type = "java"
 def product = "am"
 def component = "db"
 

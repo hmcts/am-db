@@ -1,0 +1,106 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.3.RELEASE")
+    }
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.0.1622"
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+    }
+}
+
+plugins {
+    id 'application'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+mainClassName = ''
+
+// tag::repositories[]
+repositories {
+    mavenLocal()
+    jcenter()
+    maven {
+        url  "https://dl.bintray.com/hmcts/hmcts-maven"
+    }
+}
+// end::repositories[]
+
+group 'uk.gov.hmcts.am'
+version '1.0.0-SNAPSHOT'
+
+// tag::jar[]
+jar {
+    baseName = 'am-db'
+    manifest {
+
+        attributes 'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+    }
+}
+
+bootJar {
+    archiveName = 'am-db.jar'
+}
+
+// end::jar[]
+
+// tag::dependencies[]
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+dependencies {
+
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude group: 'org.hibernate', module: 'hibernate-core'
+        exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
+    }
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') {
+        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+  {
+        // TODO remove when auth-checker-lib upgrades its dependency to spring boot 2.0.x
+        exclude group: 'uk.gov.hmcts.reform', module: 'java-logging-spring'
+    }
+
+    // CVE-2019-12086 - force update of jackson-databind - remove when dependencies move off <2.9.9
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'com.opentable.components', name: 'otj-pg-embedded', version: '0.13.1'
+    testCompile group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: '2.1.0.RELEASE'
+}
+// end::dependencies[]
+
+dependencyManagement {
+    dependencies {
+        // CVE-2019-0232 - Java and Command Line injections in Windows
+        dependencySet(group: 'org.apache.tomcat.embed', version: '9.0.19') {
+            entry 'tomcat-embed-core'
+            entry 'tomcat-embed-el'
+            entry 'tomcat-embed-websocket'
+        }
+    }
+}
+
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
+}
+
+compileTestJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
+}
