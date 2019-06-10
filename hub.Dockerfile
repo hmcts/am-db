@@ -2,12 +2,12 @@ FROM postgres:10.6-alpine
 FROM gradle:jdk8 as builder
 LABEL maintainer="https://github.com/hmcts/am-db"
 
+chmod +x gradlew
+
 COPY . /home/gradle/src
 USER root
 RUN chown -R gradle:gradle /home/gradle/src
 USER gradle
-
-chmod +x gradlew
 
 WORKDIR /home/gradle/src
 RUN gradle assemble
