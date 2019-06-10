@@ -7,6 +7,8 @@ USER root
 RUN chown -R gradle:gradle /home/gradle/src
 USER gradle
 
+chmod +x gradlew
+
 WORKDIR /home/gradle/src
 RUN gradle assemble
 
