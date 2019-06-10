@@ -75,11 +75,7 @@ dependencies {
   {
         // TODO remove when auth-checker-lib upgrades its dependency to spring boot 2.0.x
         exclude group: 'uk.gov.hmcts.reform', module: 'java-logging-spring'
-    }
-
-    // CVE-2019-12086 - force update of jackson-databind - remove when dependencies move off <2.9.9
-
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    }    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testCompile group: 'com.opentable.components', name: 'otj-pg-embedded', version: '0.13.1'
     testCompile group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: '2.1.0.RELEASE'
 }
