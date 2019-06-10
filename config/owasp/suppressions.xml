@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+  <suppress>
+    <notes><![CDATA[file name: guava-20.0.jar]]></notes>
+    <gav regex="true">^com\.google\.guava:guava:.*$</gav>
+    <cpe>cpe:/a:google:guava</cpe>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[file name: groovy-xml-2.5.6.jar]]></notes>
+    <sha1>f0bcdf0705ac84ba6209de9fea9608150d28a194</sha1>
+    <cpe>cpe:/a:apache:groovy</cpe>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[file name: groovy-json-2.5.6.jar]]></notes>
+    <sha1>c342f6a4f72765085819f949a300c616f33d75c2</sha1>
+    <cpe>cpe:/a:apache:groovy</cpe>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[file name: groovy-2.5.6.jar]]></notes>
+    <sha1>6936e700f0fb1b50bac0698ada4347a769d40199</sha1>
+    <cpe>cpe:/a:apache:groovy</cpe>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[file name: tomcat-embed-core-9.0.17.jar - Spring Boot dependency, not applicable as
+    vulnerability only applies to Windows environments and vulnerable components is disabled by default]]></notes>
+    <sha1>aacb92c34eb2e88f38a060c9fcaaae329a79c9ca</sha1>
+    <cpe>cpe:/a:apache:tomcat</cpe>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[file name: tomcat-embed-websocket-9.0.17.jar - Spring Boot dependency, not applicable as
+    vulnerability only applies to Windows environments and vulnerable components is disabled by default]]></notes>
+    <sha1>a786505cc2697f7f2d8693c0c318270cc8addd92</sha1>
+    <cpe>cpe:/a:apache:tomcat</cpe>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[file name: applicationinsights-core-2.3.1.jar (shaded: io.netty:netty-tcnative-boringssl-static:2.0.17.Final)]]></notes>
+    <gav regex="true">^io\.netty:netty-tcnative-boringssl-static:.*$</gav>
+    <cpe>cpe:/a:netty_project:netty</cpe>
+  </suppress>
+</suppressions>
