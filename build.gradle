@@ -82,6 +82,11 @@ bootJar {
     archiveName = 'am-db.jar'
 }
 
+
+test {
+    useJUnitPlatform()
+}
+
 // end::jar[]
 
 // tag::dependencies[]
