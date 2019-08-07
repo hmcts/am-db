@@ -160,5 +160,20 @@ ALTER TABLE roles
 ALTER TABLE access_management
   DROP COLUMN security_classification;
 
+ALTER TABLE access_management
+    ALTER column  relationship drop not null;
+
+INSERT INTO services VALUES ('Annotations', 'null');
+INSERT INTO resources VALUES ('Annotations','annotation','documentAnnotation');
+
+ALTER TYPE ACCESSOR_TYPE ADD VALUE 'DEFAULT';
+
+CREATE UNIQUE INDEX access_management_unique_null_relation
+ ON access_management(resource_id, accessor_id, accessor_type, attribute, resource_type, service_name, resource_name)
+where relationship IS NULL;
+
+delete from resources where service_name = 'Service 1' and resource_type ='Resource Type 1' and resource_name = 'resource';
+delete from services where service_name = 'Service 1';
+
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO amuser;
 
