@@ -177,3 +177,4 @@ delete from services where service_name = 'Service 1';
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO amuser;
 
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO amuser;
