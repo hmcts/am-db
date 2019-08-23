@@ -102,6 +102,7 @@ dependencies {
     }
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') {
         exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+        exclude group: 'junit', module: 'junit'
     }
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
@@ -119,6 +120,13 @@ dependencyManagement {
     }
 }
 
+test {
+    useJUnitPlatform()
+}
+
+integration {
+    useJUnitPlatform()
+}
 
 compileJava {
     options.annotationProcessorPath = configurations.annotationProcessor
