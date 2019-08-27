@@ -1,9 +1,11 @@
+package amtest;
+
 import org.junit.jupiter.api.Test;
 
-class AMTestClass {
+public class AMTestClass {
 
     @Test
-    void demoTest() {
+    public void demoTest() {
         assert (true);
     }
 }
