@@ -47,10 +47,11 @@ mainClassName = ''
 
 // tag::repositories[]
 repositories {
+    mavenCentral()
     mavenLocal()
     jcenter()
     maven {
-        url  "https://dl.bintray.com/hmcts/hmcts-maven"
+        url "https://dl.bintray.com/hmcts/hmcts-maven"
     }
 }
 // end::repositories[]
@@ -95,19 +96,13 @@ targetCompatibility = 1.8
 
 
 dependencies {
-
-    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
-        exclude group: 'org.hibernate', module: 'hibernate-core'
-        exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
-    }
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') {
-        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
-        exclude group: 'junit', module: 'junit'
-    }
+    
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
 // end::dependencies[]
+
 
 dependencyManagement {
     dependencies {
@@ -120,12 +115,18 @@ dependencyManagement {
     }
 }
 
-test {
-    useJUnitPlatform()
-}
+sourceSets {
+    test {
+        java.srcDir 'src/test/java'
+    }
 
-integration {
-    useJUnitPlatform()
+    test {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+            srcDir file('src/test/java')
+        }
+    }
 }
 
 compileJava {
