@@ -3,13 +3,13 @@ steps:
 
   - id: build
     build: >
-      -t {{.Run.Registry}}/hmcts/am-db:latest -t {{.Run.Registry}}/hmcts/am-db:{{.Run.ID}}
+      -t {{.Run.Registry}}/hmctsprivate/am-db:latest -t {{.Run.Registry}}/hmctsprivate/am-db:{{.Run.ID}}
       .
     keep: true
 
   - id: push
     push:
-      - "{{.Run.Registry}}/hmcts/am-db:{{.Run.ID}}"
-      - "{{.Run.Registry}}/hmcts/am-db:latest"
+      - "{{.Run.Registry}}/hmctsprivate/am-db:{{.Run.ID}}"
+      - "{{.Run.Registry}}/hmctsprivate/am-db:latest"
     when:
       - build
