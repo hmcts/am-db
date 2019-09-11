@@ -10,7 +10,7 @@ services:
     networks:
       - am-lib-testing-service-network
     ports:
-      - 5500:5432
+      - 5600:5432
     env_file:
       - .env
 
