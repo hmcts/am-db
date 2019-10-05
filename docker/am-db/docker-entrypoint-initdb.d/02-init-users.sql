@@ -175,6 +175,81 @@ where relationship IS NULL;
 delete from resources where service_name = 'Service 1' and resource_type ='Resource Type 1' and resource_name = 'resource';
 delete from services where service_name = 'Service 1';
 
+ ALTER TABLE access_management
+     ADD COLUMN last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ ALTER TABLE access_management
+     ADD COLUMN calling_service_name VARCHAR(100) DEFAULT NULL;
+
+ ALTER TABLE services
+     ADD COLUMN last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ ALTER TABLE resources
+     ADD COLUMN last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ ALTER TABLE roles
+     ADD COLUMN last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ ALTER TABLE default_permissions_for_roles
+     ADD COLUMN last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ ALTER TABLE default_permissions_for_roles
+     ADD COLUMN calling_service_name  VARCHAR(100) DEFAULT NULL;
+
+ ALTER TABLE resource_attributes
+     ADD COLUMN last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ ALTER TABLE resource_attributes
+     ADD COLUMN calling_service_name  VARCHAR(100) DEFAULT NULL;
+
+ CREATE TYPE ACTION AS ENUM ('grant', 'revoke');
+
+ create table access_management_audit
+ (
+     access_management_id    BIGINT            not null,
+     resource_id             VARCHAR(250)      not null,
+     accessor_id             VARCHAR(100)      not null,
+     permissions             integer  		      not null,
+     accessor_type           accessor_type     not null,
+     service_name            VARCHAR(100)      not null,
+     resource_type           VARCHAR(100)      not null,
+     resource_name           VARCHAR(100)      not null,
+     attribute               VARCHAR(250)      not null,
+     relationship            VARCHAR(100),
+     calling_service_name    VARCHAR(100),
+     audit_timestamp		      TIMESTAMP 		    not null DEFAULT CURRENT_TIMESTAMP,
+     changed_by              VARCHAR(100),
+     action                  ACTION
+ );
+
+ create table default_permissions_for_roles_audit
+ (
+     service_name  			    VARCHAR(100)       not null,
+     resource_type 			    VARCHAR(100)       not null,
+     resource_name 			    VARCHAR(100)       not null,
+     attribute     			    VARCHAR(250)       not null,
+     role_name     			    VARCHAR(100)       not null,
+     permissions   			    SMALLINT  		     not null,
+     calling_service_name    VARCHAR(100),
+     audit_timestamp		      TIMESTAMP 		    not null DEFAULT CURRENT_TIMESTAMP,
+     changed_by              VARCHAR(100),
+     action                  ACTION
+ );
+
+ create table resource_attributes_audit
+ (
+     service_name                    VARCHAR(100)            not null,
+     resource_type                   VARCHAR(100)            not null,
+     resource_name                   VARCHAR(100)            not null,
+     attribute                       VARCHAR(250)            not null,
+     default_security_classification SECURITY_CLASSIFICATION not null,
+     calling_service_name            VARCHAR(100),
+     audit_timestamp		              TIMESTAMP 		    not null DEFAULT CURRENT_TIMESTAMP,
+     changed_by                      VARCHAR(100),
+     action                          ACTION
+ );
+
+
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO amuser;
 
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO amuser;
